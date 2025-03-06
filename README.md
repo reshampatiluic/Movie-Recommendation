@@ -8,4 +8,4 @@ Prefix with sudo if there are permission issues
 ```http://<ip-address>:8082/recommend/{user_id}```
 
 ## View docs
-```<ip-address>:8082/docs``` or ```<ip-address>:8082/redoc```
+```http://<ip-address>:8082/docs``` or ```http://<ip-address>:8082/redoc```
