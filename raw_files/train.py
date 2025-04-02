@@ -7,17 +7,7 @@ from data import load_data
 import pickle
 
 def tune_svdpp_hyperparameters(df, reader, cv=3):
-    """
-    Tune SVD++ hyperparameters using GridSearchCV.
     
-    Parameters:
-      df (DataFrame): The full dataset.
-      reader (Reader): A Surprise Reader object.
-      cv (int): Number of cross-validation folds for grid search.
-      
-    Returns:
-      dict: The best hyperparameters based on RMSE.
-    """
     param_grid = {
         'n_factors': [50, 100, 150],
         'lr_all': [0.002, 0.005, 0.01],

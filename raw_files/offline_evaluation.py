@@ -5,28 +5,13 @@ from sklearn.model_selection import train_test_split
 from data import load_data
 
 def load_final_model(model_filename="trained_model.pkl"):
-    """
-    Loads the trained SVD++ model from pickle.
-    """
+    
     with open(model_filename, "rb") as f:
         model = pickle.load(f)
     return model
 
 def compute_hit_rate(model, train_df, test_df, k=20, rating_threshold=4.0):
-    """
-    Computes the Hit Rate as the percentage of users in the test set for whom at least one of the top-k
-    recommended items is relevant (i.e., has a rating >= rating_threshold).
-
-    For each user in the test set:
-      1. Relevant items: items in the test set with rating >= rating_threshold.
-      2. Known items: items the user has interacted with in the training set.
-      3. Generate predictions for all items not in the user's training set.
-      4. Rank these items by predicted rating and select the top k.
-      5. Count a "hit" if at least one of the top-k items is in the set of relevant items.
     
-    Returns:
-      The hit rate as a percentage.
-    """
     # All unique items from both train and test (to simulate candidate items)
     all_items = pd.concat([train_df, test_df])["movie_id"].unique()
     
