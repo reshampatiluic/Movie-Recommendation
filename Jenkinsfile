@@ -9,12 +9,12 @@ pipeline {
                 set -e
 
                 echo Creating virtualenv...
-                python -m venv .venv
+                python3 -m venv .venv
 
                 echo Installing requirements...
                 source .venv/bin/activate
-                python -m pip install --upgrade pip
-                python -m pip install -r requirements.txt
+                python3 -m pip install --upgrade pip
+                python3 -m pip install -r requirements.txt
                 '''
             }
         }
@@ -27,7 +27,7 @@ pipeline {
 
                 source .venv/bin/activate
                 echo Running linter and checking code format...
-                python -m black --check .
+                python3 -m black --check .
                 '''
             }
         }
@@ -40,7 +40,7 @@ pipeline {
 
                 source .venv/bin/activate
                 echo Running tests...
-                python -m pytest
+                python3 -m pytest
                 '''
             }
         }
