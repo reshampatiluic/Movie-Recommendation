@@ -1,0 +1,14 @@
+{
+  "generated_at": "2025-04-03T12:46:48.309139",
+  "metrics": {
+    "ctr": 30.74718977297774,
+    "wtr": 29.182279039012567,
+    "avg_rating": 3.0445402298850577
+  },
+  "data_summary": {
+    "users": 100,
+    "recommendation_events": 304,
+    "watches": 1307,
+    "ratings": 648
+  }
+}
