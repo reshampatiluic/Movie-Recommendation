@@ -7,15 +7,18 @@ from app.data_quality.schema_validation import validate_ratings_schema
 df = pd.read_csv("data/final_processed_data.csv")
 
 # Fix column names to match expected schema
-df.rename(columns={
-    'User_ID': 'userId',
-    'Movie_Name': 'movieId',
-    'Rating': 'rating',
-    'Timestamp_y': 'timestamp'
-}, inplace=True)
+df.rename(
+    columns={
+        "User_ID": "userId",
+        "Movie_Name": "movieId",
+        "Rating": "rating",
+        "Timestamp_y": "timestamp",
+    },
+    inplace=True,
+)
 
 # Optional: drop unused column
-df.drop(columns=['Timestamp_x'], errors='ignore', inplace=True)
+df.drop(columns=["Timestamp_x"], errors="ignore", inplace=True)
 
 # Fill missing ratings with column mean
 df["rating"] = df["rating"].astype(float)

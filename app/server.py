@@ -10,10 +10,13 @@ logger.info("Finished initializing SVD model")
 app = FastAPI()
 
 
-@app.get("/recommend/{user_id}", response_model=RecommendationsResponse, responses={200: {"description": "Success"}})
-
+@app.get(
+    "/recommend/{user_id}",
+    response_model=RecommendationsResponse,
+    responses={200: {"description": "Success"}},
+)
 async def get_recommendations(
-        user_id: int = Path(..., description="User ID to get recommendations for"),
+    user_id: int = Path(..., description="User ID to get recommendations for"),
 ):
     """
     Generates recommendations for a given user

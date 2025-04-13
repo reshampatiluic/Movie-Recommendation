@@ -4,6 +4,7 @@
 from evidently.report import Report
 from evidently.metric_preset import DataDriftPreset
 
+
 def check_drift(reference_df, current_df):
     report = Report(metrics=[DataDriftPreset()])
     report.run(reference_data=reference_df, current_data=current_df)

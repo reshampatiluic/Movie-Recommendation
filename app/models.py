@@ -46,10 +46,11 @@ class Base:
 
 
 class SVDRecommender(Base):
-
     def __init__(self):
         super().__init__()
-        root =  Path(__file__).resolve().parent.parent # Resolves to Movie-Recommendation/
+        root = (
+            Path(__file__).resolve().parent.parent
+        )  # Resolves to Movie-Recommendation/
         self.saved_model_path = root / "trained_models" / "trained_model.pkl"
         self.dataset_path = root / "data" / "final_processed_data.csv"
         self.model = self.load_model()
@@ -57,11 +58,14 @@ class SVDRecommender(Base):
 
     def load_data(self):
         df_all = pd.read_csv(self.dataset_path)
-        df_all.rename(columns={
-            "User_ID": "user_id",
-            "Movie_Name": "movie_id",
-            "Rating": "rating"
-        }, inplace=True)
+        df_all.rename(
+            columns={
+                "User_ID": "user_id",
+                "Movie_Name": "movie_id",
+                "Rating": "rating",
+            },
+            inplace=True,
+        )
 
         df_all["user_id"] = df_all["user_id"].astype(int)
 
@@ -76,8 +80,9 @@ class SVDRecommender(Base):
         print(f"Loaded {len(df_all)} rows from {self.dataset_path}.")
         return df_all
 
-    def stratified_cross_validate(self, model_class, df, n_splits=5, reader=Reader(rating_scale=(1, 5))):
-
+    def stratified_cross_validate(
+        self, model_class, df, n_splits=5, reader=Reader(rating_scale=(1, 5))
+    ):
         y_discrete = df["rating"].round().astype(int)
         skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=42)
         X = df.index.values
@@ -91,7 +96,9 @@ class SVDRecommender(Base):
             train_df = df.iloc[train_index]
             test_df = df.iloc[test_index]
 
-            train_data = Dataset.load_from_df(train_df[["user_id", "movie_id", "rating"]], reader)
+            train_data = Dataset.load_from_df(
+                train_df[["user_id", "movie_id", "rating"]], reader
+            )
             trainset = train_data.build_full_trainset()
 
             model = model_class()
@@ -136,11 +143,16 @@ class SVDRecommender(Base):
         reader = Reader(rating_scale=(1, 5))
 
         print("Performing stratified cross-validation with 5 folds...")
-        mean_rmse, mean_mae, mean_fit_time, mean_test_time = self.stratified_cross_validate(SVD, self.df, n_splits=5,
-                                                                                       reader=reader)
+        (
+            mean_rmse,
+            mean_mae,
+            mean_fit_time,
+            mean_test_time,
+        ) = self.stratified_cross_validate(SVD, self.df, n_splits=5, reader=reader)
         print(f"RMSE: {mean_rmse:.4f}, MAE: {mean_mae:.4f}")
         print(
-            f"Average Fit Time per fold: {mean_fit_time:.4f} sec, Average Test Time per fold: {mean_test_time:.4f} sec")
+            f"Average Fit Time per fold: {mean_fit_time:.4f} sec, Average Test Time per fold: {mean_test_time:.4f} sec"
+        )
 
         start_time = time.time()
         data = Dataset.load_from_df(self.df[["user_id", "movie_id", "rating"]], reader)
@@ -164,7 +176,8 @@ class SVDRecommender(Base):
         inference_start = time.time()
         predictions = [
             self.model.predict(user_id, movie)
-            for movie in all_movies if movie not in watched_movies
+            for movie in all_movies
+            if movie not in watched_movies
         ]
         predictions.sort(key=lambda x: x.est, reverse=True)
         recommended = [pred.iid for pred in predictions[:n]]
@@ -172,8 +185,8 @@ class SVDRecommender(Base):
         print(f"Inference time for user {user_id}: {inference_time:.4f} seconds")
         return recommended, inference_time
 
+
 if __name__ == "__main__":
     svd = SVDRecommender()
     svd_recommended, _ = svd.recommend(user_id=77386)
     print(f"SVD: {svd_recommended}")
-

@@ -2,13 +2,15 @@ import unittest
 import pandas as pd
 from app.models import SVDRecommender
 
-class TestSVDRecommender(unittest.TestCase):
 
+class TestSVDRecommender(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """Initialize the SVD recommender once for all tests"""
         cls.model = SVDRecommender()
-        cls.user_id = cls.model.df['user_id'].iloc[0]  # Dynamically choose an existing user
+        cls.user_id = cls.model.df["user_id"].iloc[
+            0
+        ]  # Dynamically choose an existing user
 
     def test_model_loads(self):
         """Check that the trained model is not None"""
@@ -48,7 +50,9 @@ class TestSVDRecommender(unittest.TestCase):
 
     def test_recommend_does_not_return_watched(self):
         """Ensure recommended movies do not include already watched ones"""
-        watched = set(self.model.df[self.model.df["user_id"] == self.user_id]["movie_id"].tolist())
+        watched = set(
+            self.model.df[self.model.df["user_id"] == self.user_id]["movie_id"].tolist()
+        )
         recs, _ = self.model.recommend(user_id=self.user_id, n=10)
         self.assertIsInstance(recs, list)
         self.assertTrue(all(movie not in watched for movie in recs))

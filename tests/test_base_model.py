@@ -1,8 +1,8 @@
 import unittest
 from app.models import Base, SVDRecommender
 
-class TestBaseModel(unittest.TestCase):
 
+class TestBaseModel(unittest.TestCase):
     def test_base_singleton_behavior(self):
         """Test if Base enforces singleton pattern correctly"""
         base1 = Base()
@@ -37,6 +37,7 @@ class TestBaseModel(unittest.TestCase):
         base = Base()
         with self.assertRaises(NotImplementedError):
             base.load_data()
+
 
 if __name__ == "__main__":
     unittest.main()

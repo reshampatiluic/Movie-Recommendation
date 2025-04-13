@@ -1,27 +1,27 @@
-# Drift detection pipeline for comparing training and live datasets 
+# Drift detection pipeline for comparing training and live datasets
 
-import pandas as pd 
+import pandas as pd
 from evidently.report import Report
 from evidently.metric_preset import DataDriftPreset
 
 # Load reference and current datasets
 ref_df = pd.read_csv("data/final_processed_data.csv")  # model training data
-curr_df = pd.read_csv("data/final_data.csv")           # current/live data
+curr_df = pd.read_csv("data/final_data.csv")  # current/live data
 
 # Rename columns to match schema
 rename_map = {
-    'User_ID': 'userId',
-    'Movie_Name': 'movieId',
-    'Rating': 'rating',
-    'Timestamp_y': 'timestamp',
-    'Timestamp_x': 'timestamp'
+    "User_ID": "userId",
+    "Movie_Name": "movieId",
+    "Rating": "rating",
+    "Timestamp_y": "timestamp",
+    "Timestamp_x": "timestamp",
 }
 ref_df.rename(columns=rename_map, inplace=True)
 curr_df.rename(columns=rename_map, inplace=True)
 
 # Drop unnecessary timestamp columns if present
-ref_df.drop(columns=['Timestamp_x', 'Timestamp_y'], errors='ignore', inplace=True)
-curr_df.drop(columns=['Timestamp_x', 'Timestamp_y'], errors='ignore', inplace=True)
+ref_df.drop(columns=["Timestamp_x", "Timestamp_y"], errors="ignore", inplace=True)
+curr_df.drop(columns=["Timestamp_x", "Timestamp_y"], errors="ignore", inplace=True)
 
 # Handle missing values in rating
 ref_df["rating"] = ref_df["rating"].astype(float).fillna(ref_df["rating"].mean())
@@ -52,7 +52,9 @@ report.run(reference_data=ref_df, current_data=curr_df)
 # Print results
 result = report.as_dict()["metrics"][0]["result"]
 print(f"\n⚠️ Drift Detected: {result['dataset_drift']}")
-print(f"📊 {result['number_of_drifted_columns']} / {result['number_of_columns']} columns drifted")
+print(
+    f"📊 {result['number_of_drifted_columns']} / {result['number_of_columns']} columns drifted"
+)
 
 # Save visual report
 report.save_html("drift_report.html")
