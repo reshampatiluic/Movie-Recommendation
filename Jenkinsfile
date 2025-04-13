@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    options {
+        shell('/bin/bash')
+    }
+
     stages {
         stage('Setup') {
             steps {
