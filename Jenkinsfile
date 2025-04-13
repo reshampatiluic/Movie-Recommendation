@@ -1,22 +1,16 @@
 pipeline {
     agent any
 
-    options {
-        shell('/bin/bash')
-    }
-
     stages {
         stage('Setup') {
             steps {
                 sh '''
-                #!/bin/bash
                 set -e
-
                 echo Creating virtualenv...
                 python3 -m venv .venv
 
                 echo Installing requirements...
-                source .venv/bin/activate
+                . .venv/bin/activate
                 python3 -m pip install --upgrade pip
                 python3 -m pip install -r requirements.txt
                 '''
@@ -26,10 +20,8 @@ pipeline {
         stage('Format') {
             steps {
                 sh '''
-                #!/bin/bash
                 set -e
-
-                source .venv/bin/activate
+                . .venv/bin/activate
                 echo Running linter and checking code format...
                 python3 -m black --check .
                 '''
@@ -39,10 +31,8 @@ pipeline {
         stage('Test') {
             steps {
                 sh '''
-                #!/bin/bash
                 set -e
-
-                source .venv/bin/activate
+                . .venv/bin/activate
                 echo Running tests...
                 python3 -m pytest
                 '''
@@ -52,9 +42,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh '''
-                #!/bin/bash
                 set -e
-
                 echo Building docker image...
                 docker compose build
 
@@ -71,10 +59,8 @@ pipeline {
     post {
         always {
             sh '''
-            #!/bin/bash
             set -e
-
-            source .venv/bin/activate
+            . .venv/bin/activate
             echo "Running coverage report..."
             pytest --cov=app tests/
             '''
