@@ -184,9 +184,3 @@ class SVDRecommender(Base):
         inference_time = time.time() - inference_start
         print(f"Inference time for user {user_id}: {inference_time:.4f} seconds")
         return recommended, inference_time
-
-
-if __name__ == "__main__":
-    svd = SVDRecommender()
-    svd_recommended, _ = svd.recommend(user_id=77386)
-    print(f"SVD: {svd_recommended}")
