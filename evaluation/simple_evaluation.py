@@ -15,7 +15,7 @@ import numpy as np
 
 # Create directories for data
 os.makedirs("simulated_telemetry", exist_ok=True)
-os.makedirs("evaluation_results", exist_ok=True)
+os.makedirs("online/evaluation_results", exist_ok=True)
 
 
 def generate_sample_data(num_users=100, num_days=14):
@@ -173,7 +173,7 @@ def generate_report(recommendations, watches, ratings):
     }
 
     # Save report
-    with open("evaluation_results/online_evaluation_report.json", "w") as f:
+    with open("online/evaluation_results/online_evaluation_report.json", "w") as f:
         json.dump(report, f, indent=2)
 
     # Print summary
