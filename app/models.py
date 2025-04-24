@@ -4,12 +4,9 @@ import pandas as pd
 import pickle
 from surprise import Dataset, Reader, SVD
 from sklearn.model_selection import StratifiedKFold
-from sklearn.metrics.pairwise import cosine_similarity
-from sklearn.metrics import mean_squared_error, mean_absolute_error
-from sklearn.model_selection import train_test_split
 import numpy as np
-import joblib
 from pathlib import Path
+from app.logger import logger
 
 
 class Base:
@@ -77,7 +74,7 @@ class SVDRecommender(Base):
         global_avg = df_all["rating"].mean()
         df_all["rating"] = df_all["rating"].fillna(global_avg)
 
-        print(f"Loaded {len(df_all)} rows from {self.dataset_path}.")
+        logger.info(f"Loaded {len(df_all)} rows from {self.dataset_path}.")
         return df_all
 
     def stratified_cross_validate(
@@ -142,15 +139,15 @@ class SVDRecommender(Base):
     def train(self):
         reader = Reader(rating_scale=(1, 5))
 
-        print("Performing stratified cross-validation with 5 folds...")
+        logger.info("Performing stratified cross-validation with 5 folds...")
         (
             mean_rmse,
             mean_mae,
             mean_fit_time,
             mean_test_time,
         ) = self.stratified_cross_validate(SVD, self.df, n_splits=5, reader=reader)
-        print(f"RMSE: {mean_rmse:.4f}, MAE: {mean_mae:.4f}")
-        print(
+        logger.info(f"RMSE: {mean_rmse:.4f}, MAE: {mean_mae:.4f}")
+        logger.info(
             f"Average Fit Time per fold: {mean_fit_time:.4f} sec, Average Test Time per fold: {mean_test_time:.4f} sec"
         )
 
@@ -160,13 +157,15 @@ class SVDRecommender(Base):
         model = SVD()
         model.fit(trainset)
         training_time = time.time() - start_time
-        print(f"Training time (full training set): {training_time:.4f} seconds")
+        logger.info(f"Training time (full training set): {training_time:.4f} seconds")
 
         self.save_model()
 
         model_size = os.path.getsize(self.saved_model_path) / 1024.0
-        print(f"Model saved as {self.saved_model_path}, size: {model_size:.2f} KB")
-        print("Model training complete.")
+        logger.info(
+            f"Model saved as {self.saved_model_path}, size: {model_size:.2f} KB"
+        )
+        logger.info("Model training complete.")
         return model, self.df, training_time, model_size
 
     def recommend(self, user_id, n=20):
@@ -182,5 +181,5 @@ class SVDRecommender(Base):
         predictions.sort(key=lambda x: x.est, reverse=True)
         recommended = [pred.iid for pred in predictions[:n]]
         inference_time = time.time() - inference_start
-        print(f"Inference time for user {user_id}: {inference_time:.4f} seconds")
+        logger.info(f"Inference time for user {user_id}: {inference_time:.4f} seconds")
         return recommended, inference_time

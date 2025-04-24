@@ -1,4 +1,4 @@
-# online_evaluation/telemetry.py
+# online/telemetry.py
 # Add at the top of the file
 import logging
 

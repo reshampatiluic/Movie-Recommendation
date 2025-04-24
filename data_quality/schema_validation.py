@@ -2,6 +2,7 @@
 
 import pandera as pa
 from pandera import Column, DataFrameSchema, Check
+from app.logger import logger
 
 rating_schema = DataFrameSchema(
     {
@@ -18,5 +19,5 @@ def validate_ratings_schema(df):
         rating_schema.validate(df)
         return True
     except pa.errors.SchemaError as e:
-        print(f"[Schema ERROR] {e}")
+        logger.error(f"[Schema ERROR] {e}")
         return False

@@ -1,6 +1,6 @@
 import argparse
 from datetime import datetime
-from online_evaluation.metrics import MetricsComputer
+from evaluation.online.metrics import MetricsComputer
 
 
 def main():
