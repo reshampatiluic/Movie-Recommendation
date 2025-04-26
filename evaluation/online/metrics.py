@@ -4,10 +4,13 @@ import os
 from datetime import datetime, timedelta
 import matplotlib.pyplot as plt
 
+<<<<<<< HEAD
 MODEL_VERSION = "v1.0"
 PIPELINE_VERSION = "online_eval_1.0"
 TELEMETRY_VERSION = "v1.0"
 
+=======
+>>>>>>> 0b1a69eb1906812fea80cf35c163e016fd45e467
 
 class MetricsComputer:
     def __init__(self, telemetry_dir="telemetry", output_dir="evaluation_results"):
@@ -122,8 +125,11 @@ class MetricsComputer:
             "wtr": self.compute_wtr(),
             "avg_rating": self.compute_rating_quality(),
         }
+<<<<<<< HEAD
         
         print(f"Provenance | Model Version: {MODEL_VERSION}, Pipeline: {PIPELINE_VERSION}, Telemetry Version: {TELEMETRY_VERSION}")
+=======
+>>>>>>> 0b1a69eb1906812fea80cf35c163e016fd45e467
 
         output_path = os.path.join(self.output_dir, "online_evaluation_report.json")
         with open(output_path, "w") as f:

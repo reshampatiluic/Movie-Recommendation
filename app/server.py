@@ -2,8 +2,11 @@ from fastapi import FastAPI, Path
 from app.models import SVDRecommender
 from app.logger import logger
 from app.schema import RecommendationsResponse
+<<<<<<< HEAD
 from datetime import datetime
 from app.provenance import log_provenance 
+=======
+>>>>>>> 0b1a69eb1906812fea80cf35c163e016fd45e467
 
 logger.info("Initializing SVD model")
 svd = SVDRecommender()
@@ -21,6 +24,7 @@ async def get_recommendations(
     user_id: int = Path(..., description="User ID to get recommendations for"),
 ):
     """
+<<<<<<< HEAD
     Generates recommendations for a given user and logs provenance information
     """
     # Generate recommendations
@@ -49,3 +53,9 @@ async def get_recommendations(
     )
 
     return RecommendationsResponse(recommendations=recommendations)
+=======
+    Generates recommendations for a given user
+    """
+    recommendations, _ = svd.recommend(user_id)
+    return RecommendationsResponse(recommendations=recommendations)
+>>>>>>> 0b1a69eb1906812fea80cf35c163e016fd45e467

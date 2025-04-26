@@ -178,4 +178,8 @@ cython_debug/
 
 .idea
 
+<<<<<<< HEAD
 .DS_StoreDownloads/cs450-hw3-Srivatsa03-main/
+=======
+.DS_Store
+>>>>>>> 0b1a69eb1906812fea80cf35c163e016fd45e467

@@ -139,9 +139,12 @@ class SVDRecommender(Base):
     def train(self):
         reader = Reader(rating_scale=(1, 5))
 
+<<<<<<< HEAD
         # Provenance: Start tracking training time
         training_start_time = time.strftime("%Y-%m-%d %H:%M:%S")
 
+=======
+>>>>>>> 0b1a69eb1906812fea80cf35c163e016fd45e467
         logger.info("Performing stratified cross-validation with 5 folds...")
         (
             mean_rmse,
@@ -169,6 +172,7 @@ class SVDRecommender(Base):
             f"Model saved as {self.saved_model_path}, size: {model_size:.2f} KB"
         )
         logger.info("Model training complete.")
+<<<<<<< HEAD
 
         # Provenance: Log metadata
         model_version = time.strftime("%Y%m%d_%H%M%S")  # timestamp version
@@ -183,6 +187,8 @@ class SVDRecommender(Base):
         logger.info(f"  RMSE: {mean_rmse:.4f}, MAE: {mean_mae:.4f}")
         logger.info(f"  Model Size: {model_size:.2f} KB")
 
+=======
+>>>>>>> 0b1a69eb1906812fea80cf35c163e016fd45e467
         return model, self.df, training_time, model_size
 
     def recommend(self, user_id, n=20):
