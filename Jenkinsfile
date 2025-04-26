@@ -39,7 +39,6 @@ pipeline {
             }
         }
 
-<<<<<<< HEAD
         stage('Log Commit Info') {
             steps {
                 script {
@@ -67,21 +66,6 @@ pipeline {
                     echo Successfully deployed!
                     """
                 }
-=======
-        stage('Deploy') {
-            steps {
-                sh '''
-                set -e
-                echo Building docker image...
-                docker compose build
-
-                echo Spinning up container...
-                docker compose down --remove-orphans
-                docker compose up -d
-
-                echo Successfully deployed!
-                '''
->>>>>>> 0b1a69eb1906812fea80cf35c163e016fd45e467
             }
         }
     }
@@ -96,8 +80,4 @@ pipeline {
             '''
         }
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 0b1a69eb1906812fea80cf35c163e016fd45e467
