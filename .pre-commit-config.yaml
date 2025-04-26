@@ -1,0 +1,25 @@
+repos:
+  - repo: https://github.com/psf/black
+    rev: 23.3.0
+    hooks:
+      - id: black
+        name: Black Code Formatter
+        language_version: python3
+
+#  - repo: local
+#    hooks:
+#      - id: pylint
+#        name: Pylint
+#        entry: pylint
+#        language: python
+#        types: [python]
+#        pass_filenames: true
+
+#  - repo: local
+#    hooks:
+#      - id: bandit
+#        name: Bandit Security Scanner
+#        entry: bandit
+#        language: python
+#        pass_filenames: false
+#        args: ["-r", "."]

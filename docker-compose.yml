@@ -1,0 +1,7 @@
+services:
+  movie-recommendation:
+    container_name: "app"
+    build:
+      context: .
+    ports:
+      - "8082:8082"
