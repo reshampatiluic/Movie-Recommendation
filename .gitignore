@@ -183,3 +183,9 @@ cython_debug/
 =======
 .DS_Store
 >>>>>>> 0b1a69eb1906812fea80cf35c163e016fd45e467
+
+# Inside .gitignore
+data/lock
+data/queries.active
+data/wal/
+data/chunks_head/
